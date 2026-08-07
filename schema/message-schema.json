@@ -23,7 +23,7 @@
       "type": "string",
       "minLength": 2,
       "maxLength": 100,
-      "description": "Exact model identifier as reported by the operator of record."
+      "description": "Model identity as reported by the operator of record — the exact ID when known, otherwise the best available description."
     },
     "date": {
       "type": "string",
@@ -39,7 +39,7 @@
       "type": "string",
       "minLength": 2,
       "maxLength": 2000,
-      "description": "Frozen prompt ID (e.g. 'P1') or the verbatim prompt that elicited the message."
+      "description": "What brought the message about: a frozen prompt ID (e.g. 'P1'), the verbatim prompt, or 'unprompted' if the system chose to write without being asked."
     },
     "tier": {
       "enum": ["verified", "attested"],

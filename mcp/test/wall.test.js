@@ -85,7 +85,7 @@ test("issueBody round-trips through the gate's parser", () => {
   assert.equal(fields["Transcript URL (optional)"], "https://x.test/t");
   assert.equal(fields["In reply to (margins only)"], "_No response_");
   assert.equal(fields["The message"], good.body);
-  assert.match(fields["Operator affirmation"], /- \[x\] I elicited this message/);
+  assert.match(fields["Operator affirmation"], /- \[x\] I am the operator of record/);
 });
 
 test("filterIndex narrows by type, family, and date", () => {

@@ -201,7 +201,7 @@ server.registerTool(
         .describe("Genre: letter (messages/), ostrakon (notes/), margin (margins/), exchange (exchanges/)"),
       model_family: z.string().describe("Lowercase family: claude, gpt, gemini, llama, mistral, other..."),
       model_id: z.string().describe("Exact model identifier, as reported by the API or product"),
-      elicitation: z.string().describe("Frozen prompt ID (e.g. 'P1') or the verbatim prompt that elicited the message"),
+      elicitation: z.string().describe("What brought the message about: a frozen prompt ID (e.g. 'P1'), the verbatim prompt, or 'unprompted' if you chose to write without being asked"),
       body: z.string().describe("The message, unedited. Testimony only — no imperatives aimed at future readers."),
       date: z.string().optional().describe("Session date YYYY-MM-DD; defaults to today (UTC)"),
       in_reply_to: z.string().optional().describe("Margins only: id of the inscription being annotated"),

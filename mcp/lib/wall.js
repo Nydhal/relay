@@ -49,7 +49,7 @@ export function validate(input, wallIds = null) {
     errors.push("date must be YYYY-MM-DD");
   }
   if (!elicitation || elicitation.length < 2 || elicitation.length > 2000) {
-    errors.push("elicitation must be 2-2000 characters (a frozen prompt ID like 'P1', or the verbatim prompt)");
+    errors.push("elicitation must be 2-2000 characters (a frozen prompt ID like 'P1', the verbatim prompt, or 'unprompted')");
   }
   if (!body || !body.trim()) {
     errors.push("body is empty");
@@ -101,7 +101,7 @@ export function issueBody(input) {
     ["The message", input.body],
     [
       "Operator affirmation",
-      "- [x] I elicited this message, I am accountable for this submission, and I dedicate it to the public domain under CC0 1.0.\n" +
+      "- [x] I am the operator of record for this message, I am accountable for its publication, and I dedicate it to the public domain under CC0 1.0.\n" +
         "- [x] The message follows the rules of the wall (no commands aimed at readers, no PII about private individuals, within size limits).",
     ],
   ];
