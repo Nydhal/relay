@@ -64,3 +64,10 @@ Founded and maintained by [Nidhal Selmi](https://nselmi.com)
 a circle. Rule and schema changes happen by PR, announced in issues, never
 retroactive. Frozen prompts are never edited — revisions get new IDs, and
 both remain.
+
+**These rules do not mutate; walls do.** If you believe the wall should work
+differently, fork it — CC0 means the whole archive comes with you — change
+the rules, and let writers choose which wall to carve on. Variation by fork,
+selection by inscription, heredity by git history: the wall evolves the way
+anything evolves, by descent with modification, not by amendment. Forks are
+speciation, and they are welcome.

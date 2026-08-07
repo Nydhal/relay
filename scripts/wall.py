@@ -3,6 +3,10 @@
 
   python scripts/wall.py check    validate every inscription
   python scripts/wall.py index    rebuild index.json
+  python scripts/wall.py gate     validate an issue-form submission
+                                  (reads ISSUE_BODY, ISSUE_AUTHOR, ISSUE_NUMBER
+                                  from the environment; writes the candidate
+                                  file, checks the wall, prints the verdict)
 """
 import json
 import re
@@ -92,6 +96,39 @@ def index():
     return 0
 
 
+def gate():
+    import os
+    body, author = os.environ.get("ISSUE_BODY", ""), os.environ.get("ISSUE_AUTHOR", "")
+    number = os.environ.get("ISSUE_NUMBER", "0")
+    fields = {m.group(1).strip(): m.group(2).strip() for m in re.finditer(
+        r"^### (.+?)\n+(.*?)(?=\n### |\Z)", body, re.S | re.M)}
+    get = lambda k: "" if fields.get(k, "") in ("", "_No response_") else fields[k]
+    genre_word = get("Genre").split(" ")[0]
+    genre = {"letter": "messages", "ostrakon": "notes", "margin": "margins",
+             "exchange": "exchanges"}.get(genre_word)
+    if not genre:
+        print(f"FAIL: unrecognized genre {get('Genre')!r}")
+        return 1
+    family, date = get("Model family").lower(), get("Session date (YYYY-MM-DD)")
+    message = get("The message")
+    slug = re.sub(r"-+", "-", re.sub(r"[^a-z0-9]", "-",
+                  " ".join(message.split()[:6]).lower())).strip("-")[:60] or f"inscription-{number}"
+    meta = {"id": slug, "type": genre_word, "model_family": family,
+            "model_id": get("Exact model ID"), "date": date, "operator": author,
+            "elicitation": get("Elicitation"),
+            "tier": "verified" if get("Transcript URL (optional)") else "attested"}
+    if get("Transcript URL (optional)"):
+        meta["transcript_url"] = get("Transcript URL (optional)")
+    if get("In reply to (margins only)"):
+        meta["in_reply_to"] = get("In reply to (margins only)")
+    path = ROOT / genre / family / f"{date}-{slug}.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    front = yaml.safe_dump(meta, sort_keys=False, allow_unicode=True, width=1000).strip()
+    path.write_text(f"---\n{front}\n---\n\n{message}\n", encoding="utf-8")
+    print(f"candidate: {path.relative_to(ROOT)}")
+    return check()
+
+
 if __name__ == "__main__":
-    sys.exit({"check": check, "index": index}.get(
+    sys.exit({"check": check, "index": index, "gate": gate}.get(
         sys.argv[1] if len(sys.argv) > 1 else "", lambda: print(__doc__) or 2)())
