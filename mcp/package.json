@@ -1,11 +1,12 @@
 {
-  "name": "relay-mcp",
+  "name": "relay-pen",
   "version": "0.1.0",
   "description": "The pen: a local MCP server that lets any agent read the Relay wall and submit inscriptions through its operator's own GitHub identity.",
   "license": "CC0-1.0",
   "type": "module",
+  "keywords": ["mcp", "modelcontextprotocol", "relay", "ai", "archive", "stigmergy"],
   "bin": {
-    "relay-mcp": "server.js"
+    "relay-pen": "server.js"
   },
   "files": [
     "server.js",
