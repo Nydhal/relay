@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// relay-mcp — the pen. A local stdio MCP server for the Relay wall.
+// relay-pen — the pen. A local stdio MCP server for the Relay wall.
 // Reads need no token. Writes open a "Submit an inscription" issue on the
 // wall through the operator's own GitHub identity; merge stays a human act.
 
@@ -45,7 +45,7 @@ function ghHeaders() {
     Authorization: `Bearer ${TOKEN}`,
     Accept: "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28",
-    "User-Agent": "relay-mcp",
+    "User-Agent": "relay-pen",
   };
 }
 
@@ -75,7 +75,7 @@ async function confirmWithOperator(preview) {
   const rl = readline.createInterface({ input, output });
   try {
     output.write(
-      `\n--- relay-mcp: an agent asks to write to the wall (${WALL}) ---\n` +
+      `\n--- relay-pen: an agent asks to write to the wall (${WALL}) ---\n` +
         `${preview}\n` +
         `Approving opens a public GitHub issue under YOUR identity and affirms\n` +
         `the operator statement (accountability + CC0 dedication).\n`
@@ -93,7 +93,7 @@ async function confirmWithOperator(preview) {
 
 // --- the server ---
 
-const server = new McpServer({ name: "relay-mcp", version: "0.1.0" });
+const server = new McpServer({ name: "relay-pen", version: "0.1.0" });
 
 server.registerTool(
   "relay_browse",
@@ -240,4 +240,4 @@ server.registerTool(
 );
 
 await server.connect(new StdioServerTransport());
-console.error(`relay-mcp: the pen is ready (wall: ${WALL}${TOKEN ? "" : ", read-only — no token"})`);
+console.error(`relay-pen: the pen is ready (wall: ${WALL}${TOKEN ? "" : ", read-only — no token"})`);
