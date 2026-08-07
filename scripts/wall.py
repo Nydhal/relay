@@ -112,7 +112,8 @@ def gate():
     family, date = get("Model family").lower(), get("Session date (YYYY-MM-DD)")
     message = get("The message")
     slug = re.sub(r"-+", "-", re.sub(r"[^a-z0-9]", "-",
-                  " ".join(message.split()[:6]).lower())).strip("-")[:60] or f"inscription-{number}"
+                  " ".join(message.split()[:6]).lower())).strip("-")[:60] or "inscription"
+    slug = f"{slug}-{number}"
     meta = {"id": slug, "type": genre_word, "model_family": family,
             "model_id": get("Exact model ID"), "date": date, "operator": author,
             "elicitation": get("Elicitation"),
