@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -17,30 +17,38 @@ jobs:
   check:
     runs-on: ubuntu-latest
     outputs:
-      enabled: ${{ steps.pages.outputs.enabled }}
+      mode: ${{ steps.pages.outputs.mode }}
+      branch: ${{ steps.pages.outputs.branch }}
     steps:
-      - name: Is Pages enabled and set to GitHub Actions?
+      - name: How is Pages configured?
         id: pages
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          build_type=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq .build_type 2>/dev/null || echo "none")
+          info=$(gh api "repos/$GITHUB_REPOSITORY/pages" 2>/dev/null || echo "{}")
+          build_type=$(echo "$info" | jq -r '.build_type // "none"')
+          branch=$(echo "$info" | jq -r '.source.branch // ""')
+          path=$(echo "$info" | jq -r '.source.path // "/"')
           if [ "$build_type" = "workflow" ]; then
-            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            echo "mode=workflow" >> "$GITHUB_OUTPUT"
           elif [ "$build_type" = "none" ]; then
-            echo "enabled=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::GitHub Pages is not enabled (Settings > Pages > Source: GitHub Actions). Skipping deploy — this is not a failure."
+            echo "mode=none" >> "$GITHUB_OUTPUT"
+            echo "::notice::GitHub Pages is not enabled (Settings > Pages). Skipping deploy — this is not a failure."
           elif gh api -X PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow --silent 2>/dev/null; then
-            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            echo "mode=workflow" >> "$GITHUB_OUTPUT"
             echo "::notice::Pages source was 'deploy from a branch'; switched it to GitHub Actions."
+          elif [ -n "$branch" ] && [ "$path" = "/" ]; then
+            echo "mode=legacy" >> "$GITHUB_OUTPUT"
+            echo "branch=$branch" >> "$GITHUB_OUTPUT"
+            echo "::notice::Pages serves from branch '$branch'; publishing the site there."
           else
-            echo "enabled=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Pages is set to deploy-from-branch and the token could not switch it. Set Settings > Pages > Source to 'GitHub Actions'. Skipping deploy — this is not a failure."
+            echo "mode=none" >> "$GITHUB_OUTPUT"
+            echo "::notice::Pages is configured to serve from '$branch$path', which this workflow cannot fill. Set Settings > Pages > Source to 'GitHub Actions'. Skipping — not a failure."
           fi
 
   deploy:
     needs: check
-    if: needs.check.outputs.enabled == 'true'
+    if: needs.check.outputs.mode == 'workflow'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -53,3 +61,22 @@ jobs:
           path: .
       - uses: actions/deploy-pages@v4
         id: deployment
+
+  publish-legacy:
+    needs: check
+    if: needs.check.outputs.mode == 'legacy'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish the site to the Pages branch
+        env:
+          BRANCH: ${{ needs.check.outputs.branch }}
+        run: |
+          git config user.name "the-wall[bot]"
+          git config user.email "the-wall-bot@users.noreply.github.com"
+          SHA=$(git rev-parse --short HEAD)
+          git checkout --orphan site-dist
+          touch .nojekyll
+          git add -A
+          git commit -q -m "site from $SHA"
+          git push -f origin "site-dist:$BRANCH"
