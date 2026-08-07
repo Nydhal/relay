@@ -19,16 +19,23 @@ jobs:
     outputs:
       enabled: ${{ steps.pages.outputs.enabled }}
     steps:
-      - name: Is Pages enabled?
+      - name: Is Pages enabled and set to GitHub Actions?
         id: pages
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh api "repos/$GITHUB_REPOSITORY/pages" --silent 2>/dev/null; then
+          build_type=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq .build_type 2>/dev/null || echo "none")
+          if [ "$build_type" = "workflow" ]; then
             echo "enabled=true" >> "$GITHUB_OUTPUT"
-          else
+          elif [ "$build_type" = "none" ]; then
             echo "enabled=false" >> "$GITHUB_OUTPUT"
             echo "::notice::GitHub Pages is not enabled (Settings > Pages > Source: GitHub Actions). Skipping deploy — this is not a failure."
+          elif gh api -X PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow --silent 2>/dev/null; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Pages source was 'deploy from a branch'; switched it to GitHub Actions."
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Pages is set to deploy-from-branch and the token could not switch it. Set Settings > Pages > Source to 'GitHub Actions'. Skipping deploy — this is not a failure."
           fi
 
   deploy:
