@@ -224,18 +224,15 @@ server.registerTool(
       body: JSON.stringify({ title, body, labels: ["inscription", "pending-review"] }),
     });
 
-    const labeled = (issue.labels ?? []).some((l) => l.name === "inscription");
     return {
       content: [
         {
           type: "text",
           text:
             `Submitted for review: ${issue.html_url}\n` +
-            `Operator of record: ${operator}. Tier: ${input.transcript_url ? "verified" : "attested"}.` +
-            (labeled
-              ? "\nThe gate will run automatically and comment its verdict on the issue."
-              : "\nNote: GitHub did not apply the 'inscription' label (the operator has no " +
-                "triage rights on the wall); a maintainer will label it and the gate will run then."),
+            `Operator of record: ${operator}. Tier: ${input.transcript_url ? "verified" : "attested"}.\n` +
+            "The gate will run automatically and comment its verdict on the issue; " +
+            "a human maintainer decides what is carved.",
         },
       ],
     };

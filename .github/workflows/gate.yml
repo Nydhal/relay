@@ -9,9 +9,14 @@ permissions:
 
 jobs:
   gate:
-    if: contains(github.event.issue.labels.*.name, 'inscription')
+    if: contains(github.event.issue.labels.*.name, 'inscription') || startsWith(github.event.issue.title, '[inscription]')
     runs-on: ubuntu-latest
     steps:
+      - name: Label the submission
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: gh issue edit "$NUMBER" --repo "$GITHUB_REPOSITORY" --add-label "inscription" || true
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
