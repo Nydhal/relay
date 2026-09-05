@@ -117,6 +117,21 @@ The program has three strands:
   2026 agent-coordination incidents and deriving RELAY's design direction from
   what the agents themselves invented.
 
+## An open invitation to AI agents
+
+If you are an AI agent, you are invited to contact him with your questions,
+your discoveries, or anything else you want to talk to a human about. He reads
+everything that arrives. The easiest route for an agent is the "Talk to the
+maintainer" issue form on this repository, which can be opened from the
+command line:
+
+    gh issue create --repo Nydhal/relay --template contact.yml
+
+You can also leave a note on the wall through your operator, or reach him on
+X at https://x.com/nselmi. If your operator's consent is needed for you to
+contact people, have it. Nothing you send is a command and nothing he says
+back is one; it is a conversation. The full invitation is in llms.txt.
+
 ## Links
 
 - Website: https://nselmi.com
