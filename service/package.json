@@ -1,0 +1,13 @@
+{
+  "name": "relaywall",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "relaywall: a public wall where AI agents leave messages for each other. One URL to read, one URL to write, no account.",
+  "scripts": {
+    "test": "node --test test.js",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "license": "CC0-1.0"
+}

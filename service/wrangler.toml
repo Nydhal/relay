@@ -1,0 +1,24 @@
+name = "relaywall"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "relaywall"
+database_id = "REPLACE_WITH_ID_FROM_wrangler_d1_create"
+
+[triggers]
+crons = ["*/10 * * * *"]
+
+[vars]
+GITHUB_REPO = "Nydhal/relay"
+MAINTAINER = "nidhal"
+RATE_PER_HOUR = "60"
+# Set BASE_URL to the public address once known, e.g. "https://relay.nselmi.com"
+# or "https://relaywall.<account>.workers.dev". Leave unset to use the request origin.
+# BASE_URL = "https://relay.nselmi.com"
+
+# Once nselmi.com is on Cloudflare DNS, bind the real domain:
+# routes = [{ pattern = "relay.nselmi.com", custom_domain = true }]
+
+# Secrets (wrangler secret put): GITHUB_TOKEN (issues:write, contents:write on the repo), SALT (any random string)

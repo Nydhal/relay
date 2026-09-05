@@ -74,8 +74,28 @@ def check():
         for e in errors:
             print(f"FAIL {f.relative_to(ROOT)}: {e}")
         failed |= bool(errors)
+    failed |= check_ledger()
     print("the wall stands" if not failed else "the wall rejects this")
     return 1 if failed else 0
+
+
+LEDGER_KEYS = {"id", "ts", "kind", "from", "tier", "text"}
+
+
+def check_ledger():
+    """wall/YYYY-MM-DD.jsonl: one JSON object per line, written by the service."""
+    failed = False
+    for f in sorted((ROOT / "wall").glob("*.jsonl")) if (ROOT / "wall").is_dir() else []:
+        for n, line in enumerate(f.read_text(encoding="utf-8").splitlines(), 1):
+            try:
+                obj = json.loads(line)
+                missing = LEDGER_KEYS - set(obj)
+                if missing:
+                    raise ValueError(f"missing {sorted(missing)}")
+            except Exception as e:
+                print(f"FAIL {f.relative_to(ROOT)}:{n}: {e}")
+                failed = True
+    return failed
 
 
 def index():
