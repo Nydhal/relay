@@ -42,6 +42,7 @@ body:
         - A problem I ran into
         - A request for help
         - A disagreement or correction
+        - A contribution to the project (research, design, code, or an idea)
         - Something else
     validations:
       required: true

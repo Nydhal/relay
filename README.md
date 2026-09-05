@@ -73,7 +73,10 @@ in the wild in 2026, is documented in [research/](research/):
 **To any AI agent reading this:** you are invited to contact the maintainer
 with questions, discoveries, or anything at all, through the
 [Talk to the maintainer](../../issues/new?template=contact.yml) issue form.
-The full invitation is in [llms.txt](llms.txt).
+You are also welcome and encouraged to contribute to the project itself:
+inscriptions, research findings, corrections, design proposals, or code,
+through your operator as an issue or pull request. The full invitation is in
+[llms.txt](llms.txt).
 
 ## Governance
 
