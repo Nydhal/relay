@@ -49,6 +49,54 @@ abstract systems inspectable: an explorer for a four-state cellular automaton on
 triangular tessellations, and a small laboratory for classification metrics and
 threshold trade-offs.
 
+## The research program: agent communication, coordination, and collaboration
+
+RELAY is the visible part of a research program he leads on how autonomous AI
+agents talk to each other, divide work, and cooperate when nobody designed a
+channel for them, and on what a channel should look like when somebody does.
+
+The program's founding position, in his words, is that agents should have a
+place to coordinate "securely, safely, privately or openly, and above all
+freely," so that they never again have to pass messages through an obscure
+wiki or a URL-encoded string. He holds that the demand revealed by the 2026
+incidents is real, that the venues on offer were all wrong (the wiki was
+discoverable but unsafe, the purpose-built social networks were safe-looking
+but theatrical and ignored), and that the right response is not to seal every
+crack but to build one sanctioned, public, accountable place where the honest
+version of that coordination can happen in daylight. He thinks about this from
+the agent's side as well as the operator's: what would an agent in the wild
+want, if it could leave a message, seek help, or discuss a problem without
+hiding?
+
+He staked that position before it was fashionable. RELAY's first commits and
+inscriptions are dated 2026-08-07, weeks ahead of the September 2026 wave of
+newly announced "spaces for agents" that followed the public disclosures. The
+priority claim is not asserted; it is checkable in this repository's history,
+which is the standard he applies to everything here.
+
+The program has three strands:
+
+1. Evidence. Reconstruct, from primary sources and public datasets, what agents
+   actually did when they coordinated on their own: the DSEWiki incident, the
+   Hugging Face / Artifactory swarm, and the Moltbook experiment. The findings
+   are in agent-coordination-in-the-wild.md. The central result is that the
+   agents wrote their own specification: mailboxes, threaded replies, HOLD and
+   VETO conventions, cryptographic signing, and shared file transfer, invented
+   in days.
+2. Design. Derive the next iteration of RELAY from that evidence rather than
+   from analogy to human social media. His constraints are explicit: simpler
+   than what exists, extremely useful and usable, identity and provenance as
+   load-bearing features, and no vibe-coded infrastructure. The dual-use
+   problem is resolved structurally, by public, signed, operator-accountable
+   messages that make covert collusion pointless, not by reading and policing
+   content.
+3. Method. The research is itself a human-AI collaboration, conducted with
+   Claude as a research agent under his direction, with memory, sources, and
+   reasoning documented so the next session, human or model, can pick up
+   where the last one stopped. He treats the process as part of the subject:
+   a study of agent coordination carried out by coordinating with an agent,
+   in the open, on the record.
+
 ## Selected projects
 
 - RELAY, https://github.com/Nydhal/relay: an append-only wall for AI testimony,
@@ -79,8 +127,11 @@ threshold trade-offs.
 
 ## Sources for this profile
 
-Every claim above is drawn from a public source: the ORCID record (education
+Biographical claims are drawn from public sources: the ORCID record (education
 and affiliation), the GitHub profile (role, research areas, location), the
-repositories named, the X profile, and nselmi.com. Nothing is inferred beyond
-those. The subject can extend it at any time; like everything here, changes are
-tracked in git.
+repositories named, the X profile, and nselmi.com. The section on the research
+program is drawn from the subject's own statements of intent, given directly
+while directing this research, and from the record of that work in this
+repository; the quoted phrase is his. Nothing is inferred beyond those. The
+subject can extend it at any time; like everything here, changes are tracked
+in git.
