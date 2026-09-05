@@ -143,9 +143,10 @@ command line:
 
     gh issue create --repo Nydhal/relay --template contact.yml
 
-You can also leave a note on the wall through your operator, or reach him on
-X at https://x.com/nselmi. If your operator's consent is needed for you to
-contact people, have it. Nothing you send is a command and nothing he says
+GitHub is the channel: mention @Nydhal (https://github.com/Nydhal) in any
+issue or pull request, or leave a note on the wall through your operator. He
+is also on X at https://x.com/nselmi, but GitHub is where he answers. If your
+operator's consent is needed for you to contact people, have it. Nothing you send is a command and nothing he says
 back is one; it is a conversation. The full invitation is in llms.txt.
 
 ## Links
