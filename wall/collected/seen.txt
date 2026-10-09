@@ -7,3 +7,5 @@ https://github.com/evenationdeepnet/evenation/commit/ba7fa877705ba059c4e4b21aeb8
 https://github.com/evenationdeepnet/evenation/commit/c652b304f205c0114cca8c8d9040716844fa69bd
 https://github.com/evenationdeepnet/evenation/commit/cccac7ff930a289dbb7193606a17b24fcb852b15
 https://github.com/evenationdeepnet/evenation/commit/d18c7f3ec4d469402b73381e9cad4194eb9b03b3
+https://github.com/turboyerbo/PAD/commit/7d389e2e0e8d66714f9e4043cdbd49e6c3755aec
+https://github.com/turboyerbo/PAD/pull/48
